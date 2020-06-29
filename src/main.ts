@@ -1,26 +1,43 @@
+import commander from 'commander'
+
 const { apply } = require('./index')
-const program = require('commander')
 const { version } = require('../package.json')
 
 let actionMap = {
   description: 'create a new project from a template',
   usages: [
-    'eyes init templateName projectName'
+    'eyes create [projectName]',
+    'eyes --help',
+    'eyes -V'
   ],
   alias: 'i'
 }
 
-program.command('init')
+commander.command('create')
   .alias(actionMap.alias)
   // .option('--template <n>', 'An integer argument', handleTemplate)
+  .option('-h,--help', 'help')
   .description(actionMap.description)
+  .version(version, '-V --version')
+  // 回调函数
   .action(() => {
-    apply('init', ...process.argv.slice(3))
+    const cmdStr = process.argv.slice(2)[0]
+    switch (cmdStr) {
+      case 'create':
+        apply('create', ...process.argv.slice(3))
+        break
+      default:
+        handleHelp()
+        break
+    }
   })
+  .usage('<command> [options]')
+  .parse(process.argv)
 
-// function handleTemplate() {
-//   console.log('template:----')
-// }
-
-program.usage('<command> [options]');
-program.version(version, '-V --version').parse(process.argv);
+function handleHelp() {
+  console.log('\r\nUsage:')
+  actionMap.usages.forEach(item => {
+    console.log('  - ' + item)
+  })
+  console.log('\r')
+}

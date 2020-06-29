@@ -1,3 +1,3 @@
 exports.apply = (action: string, ...args: any) => {
-  require(`./${action}`)(...args);
+  require(`./${action}`)(...args)
 }
