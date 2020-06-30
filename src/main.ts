@@ -1,5 +1,5 @@
 import commander from 'commander'
-
+const chalk = require('chalk')
 const { apply } = require('./index')
 const { version } = require('../package.json')
 
@@ -35,9 +35,9 @@ commander.command('create')
   .parse(process.argv)
 
 function handleHelp() {
-  console.log('\r\nUsage:')
+  console.log(chalk.blue('\r\nUsage:'))
   actionMap.usages.forEach(item => {
-    console.log('  - ' + item)
+    console.log(chalk.blue('  - ' + item))
   })
   console.log('\r')
 }
