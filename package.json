@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "H.Z",
   "license": "MIT",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
   "bin": {
     "eyes": "./bin/www"
   },
