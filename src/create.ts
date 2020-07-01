@@ -3,7 +3,7 @@ const fs = require('fs')
 const symbol = require('log-symbols')
 const inquirer = require('inquirer')
 const ora = require('ora')
-const config = require('./utils/consfig')
+const config = require('./utils/config')
 const { downloadGit } = require('./utils/downloadGit')
 
 let init = async (...args: string[]) => {
