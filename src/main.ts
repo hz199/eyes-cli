@@ -1,4 +1,4 @@
-import commander from 'commander'
+const commander = require('commander')
 const chalk = require('chalk')
 const { apply } = require('./index')
 const { version } = require('../package.json')
@@ -13,31 +13,31 @@ let actionMap = {
   alias: 'i'
 }
 
-commander.command('create')
-  .alias(actionMap.alias)
-  // .option('--template <n>', 'An integer argument', handleTemplate)
-  .option('-h,--help', 'help')
-  .description(actionMap.description)
-  .version(version, '-V --version')
-  // 回调函数
-  .action(() => {
-    const cmdStr = process.argv.slice(2)[0]
+commander
+  .command('eyes')
+  .usage('create <fileName>')
+  .version(version)
+  // .option('-r, --range <a>..<b>', 'A range', range)
+  // .option('-l, --list <items>', 'A list', list)
+  .action((d: any, otherD: any) => {
+    const cmdStr = otherD ? otherD[0] : ''
     switch (cmdStr) {
       case 'create':
-        apply('create', ...process.argv.slice(3))
+        if (!otherD[1]) {
+          throw new Error('请输入文件名')
+        }
+        apply('create', otherD[1])
         break
       default:
         handleHelp()
         break
-    }
   })
-  .usage('<command> [options]')
   .parse(process.argv)
 
-function handleHelp() {
-  console.log(chalk.blue('\r\nUsage:'))
-  actionMap.usages.forEach(item => {
-    console.log(chalk.blue('  - ' + item))
-  })
-  console.log('\r')
-}
+  function handleHelp() {
+    console.log(chalk.blue('\r\nUsage:'))
+    actionMap.usages.forEach(item => {
+      console.log(chalk.blue('  - ' + item))
+    })
+    console.log('\r')
+  }
